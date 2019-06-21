@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="wiz_course_form" model="ir.ui.view">
+            <field name="name">wiz course</field>
+            <field name="model">wiz.openacademy.course</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"></field>
+                        <field name="description"></field>
+                    </group>
+                    <footer>
+                        <button name="add_session" string="Add Session" class="oe_highlight" type="object"></button>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="launch_session_wizard" name="Add New Session" src_model="openacademy.course" res_model="wiz.openacademy.course" view_mode="form" target="new" key2="client_action_multi"/>
+    </data>
+</odoo>

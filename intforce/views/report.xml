@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <template id="report_session">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.internal_layout">
+                        <div class="page">
+                            <div class="oe_structure" />
+                            <h1 class="text-center" t-esc="doc.name"></h1>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th> Name </th>
+                                        <th> Email </th>
+                                        <th> Phone </th>
+                                        <th> Attended </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.attendee_ids" t-as="attendee">
+                                        <tr>
+                                            <td>
+                                                <t t-esc="attendee.name"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="attendee.email"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="attendee.phone"/>
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-square-o"></i>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <div class="oe_structure" />
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id= "report_sessions"
+            name = "intforce.report_session"
+            string = "Session Report"
+            model = "openacademy.session"
+            report_type = "qweb-pdf"/>
+    </data>
+</odoo>

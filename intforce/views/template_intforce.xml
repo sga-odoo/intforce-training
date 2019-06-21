@@ -1,0 +1,62 @@
+<odoo>
+    <data>
+
+        <template id="courses" name="Simple Page">
+            <t t-call="website.layout">
+                <div class="container">
+                    <h1 class="text-center">Courses List</h1>
+                    <div class="row">
+                        <t t-foreach="courses" t-as="course">
+                            <div class="col-md-4">
+                                <div class="alert alert-success text-center">
+                                    <h3 t-esc="course.name"></h3>
+                                    <img class="img img-responsive my_img" width="150" t-attf-src="/web/image/openacademy.course/#{course.id}/image"></img>
+                                    <hr/>
+                                    <a class="btn btn-lg btn-success" t-attf-href="/intforce/courses/#{course.id}"> Details </a>
+                                </div>
+                            </div>
+                            <!-- <div t-if="course_index != 0 and course_index%2 == 0" class="clearfix"> </div> -->
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="courses_detail" name="Detail Page">
+            <t t-call="website.layout">
+                <div class="container" id="openacademy">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <img class="img img-responsive my_img" width="150" t-attf-src="/web/image/openacademy.course/#{course.id}/image"></img>
+                        </div>
+                        <div class="col-md-offset-1 col-md-5">
+                            <h1 t-field="course.name"></h1>
+                            <div class="text-muted" t-field="course.description"></div>
+                        </div>
+                    </div>
+                    <div t-field="course.html" id="html_detail"></div>
+                </div>
+                <div class="oe_structure"></div>
+            </t>
+        </template>
+        <template id="courses_detail_inh" customize_show="True" inherit_id="intforce.courses_detail" name="Session Detail">
+            <xpath expr="//div[@id='html_detail']" position="before">
+                <h3 class="text-center" > Session Info</h3>
+                <t t-foreach="course.session_ids" t-as="session">
+                    <!-- <span t-attf-class="label label-#{session.state == 'draft' and 'success' or session.state == 'confirm' and 'info'}"> 
+                        <t t-esc="session.name"> </t> (<span t-field="session.date"> </span>) 
+                    </span> -->
+
+                    <span class="label label-success" t-if="session.state == 'draft'">
+                        <t t-esc="session.name"> </t> (<span t-field="session.date"> </span>) 
+                    </span>
+
+                    <span class="label label-info" t-elif="session.state == 'confirm'"> 
+                        <t t-esc="session.name"> </t> (<span t-field="session.date"> </span>) 
+                    </span>
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

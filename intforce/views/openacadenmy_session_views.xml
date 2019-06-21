@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="session_form" model="ir.ui.view">
+            <field name="name">session.form</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <form string="Session">
+                    <!-- You can put buttons and status bar in <header> part -->
+                    <header>
+                        <button string="Confirm" type="object" name="do_confirm" states="draft"/>
+                        <button string="Done" type="object" name="do_done" states="confirmed"/>
+                        <!-- if you use widget="statusbar" then your selection box will be converted in to status bar statusbar_visible="draft,confirm,done" use for showing default states in status bar
+                        -->
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <!-- If you use <sheet> tag then you will get card effect in form view  -->
+                    <sheet>
+                        <h1>
+                            <field name="name" placeholder="Session name" widget="test"/>
+                        </h1>
+                        <!-- <group> used for separating fields in to groups -->
+                        <group>
+                            <!-- string in <group> create Title over group  -->
+                            <!-- nesting of <group> will make 2 colums in form view -->
+                            <group name='test' string="General">
+                                <field name="course_id"/>
+                                <field name="course_description" />
+                                <field name="instructor_id"/>
+                                <field name="active"/>
+                                <field name="color"/>
+                                <!-- <field name="dashboard_graph_model"/> -->
+
+                            </group>
+                            <group string="Schedule">
+                                <field name="duration"/>
+                                <field name="seats"/>
+                                <!-- widget="progressbar" is use to display progressbar instead of float field -->
+                                <field name="occupation" widget="progressbar"/>
+                            </group>
+                        </group>
+                        <!-- <notebook> and  <page> are used for creating tabs in form view -->
+                        <notebook>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                            <page string="Attendees">
+                                <field name="attendee_ids"/>
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                    <!-- you can enable chatter in any of form view just by given lines
+                        you just need to inherit 'mail.thread' in model
+                     -->
+                     <div class="oe_chatter">
+                         <field name="message_follower_ids" widget="mail_followers"/>
+                         <field name="message_ids" widget="mail_thread"/>
+                     </div>
+                </form>
+            </field>
+        </record>
+        <record id="session_list" model="ir.ui.view">
+            <field name="name">session.list</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <tree string="list" decoration-danger="state == 'draft'" decoration-success="state == 'done'">
+                    <field name="name"></field>
+                    <field name="course_id"></field>
+                    <field name="state"></field>
+                </tree>
+            </field>
+        </record>
+
+        <record id="session_search" model="ir.ui.view">
+            <field name="name">session.search</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"></field>
+                    <field name="course_id"></field>
+                    <field name="state"></field>
+                    <filter name="all_new" string="New" domain="[('state', '=', 'draft')]"/>
+                    <filter name="all_new" string="Done" domain="[('state', '=', 'done')]"/>
+                    <separator/>
+                    <filter name="inactive" string="Inactive" domain="[('active', '=', False)]"/>
+                    <group string="Group By">
+                        <filter name="group_by_state" string="State"
+                                context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="session_calendar" model="ir.ui.view">
+            <field name="name">session.calendar</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <calendar color="course_id" date_start="date" string="Sessions">
+                    <field name="name"/>
+                    <field name="course_id"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="session_graph" model="ir.ui.view">
+            <field name="name">session.graph</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <graph type="bar">
+                    <field name="course_id"/>
+                    <field name="state"/>
+                    <field name="attendee_count" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="session_pivot" model="ir.ui.view">
+            <field name="name">session.pivot</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="state" type="row"/>
+                    <field name="course_id" type="col"/>
+                    <field name="instructor_id" type="col"/>
+                    <field name="attendee_count" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="session_gantt" model="ir.ui.view">
+            <field name="name">session.gantt</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <gantt date_start="date" date_delay="duration"  default_group_by="instructor_id">
+                </gantt>
+            </field>
+        </record>
+
+        <record id="session_kanban" model="ir.ui.view">
+            <field name="name">session.kanban</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"></field>
+                    <field name="color"></field>
+                    <field name="course_id"></field>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
+                                <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle btn" role="button" data-toggle="dropdown" href="#" >
+                                        <span class="fa fa-bars fa-lg"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
+                                        <t><li><a type="delete">Delete</a></li></t>
+                                        <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <div class="col-md-2">
+                                        <img style="max-width:50px;" alt="image" t-att-src="kanban_image('openacademy.course', 'image', record.course_id.raw_value)" t-att-title="record.name.value"/>
+                                    </div>
+                                    <div class="col-md-offset-1 col-md-7">
+                                        <h2 class="mt8 mb4"><field name="name"></field></h2>
+                                        <div> <strong> <field name="course_id"></field> </strong> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="session_list_action">
+            <field name="name">Session</field>
+            <field name="res_model">openacademy.session</field>
+            <field name="view_mode">kanban,tree,gantt,pivot,calendar,graph,form</field>
+        </record>
+
+
+        <menuitem id="sessions_menu" parent="menu_general" action="session_list_action" />
+    </data>
+</odoo>

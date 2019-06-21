@@ -1,0 +1,22 @@
+{
+    'name': 'Open Academy',
+    'version': '1.0',
+    'category': 'Tools',
+    'summary': " Courses, Sessions, Attendees ",
+    'description': """ . . . """,
+    'depends': ['base', 'mail', 'website'],
+    # 'depends': ['base', 'mail', 'crm'],
+    'website': 'http://www.odoo.com',
+    'data': [
+        'views/openacademy_course_views.xml',
+        'views/openacademy_wizard.xml',
+        'views/openacadenmy_session_views.xml',
+        'views/templates.xml',
+        'views/template_intforce.xml',
+        'views/report.xml',
+        'views/snippet.xml',
+        'security/ir.model.access.csv',
+    ],
+    'auto_install': True,
+    'application': True,
+}

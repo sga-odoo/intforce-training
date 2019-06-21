@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <template id="static_page" name="Simple Page">
+            <t t-call="website.layout">
+                <div class="container">
+                    <h1>Hello World</h1>
+                </div>
+            </t>
+        </template>
+        <template id="dynamic_page" name="Dynamic Page">
+            <t t-call="website.layout">
+
+                <!-- class="oe_structure" for the drag-drop support-->
+                <div class="oe_structure"></div>
+                <!-- to declare variable in template-->
+                <t t-set="var1" t-value="1000"/>
+
+                <div class="container">
+                    <!-- t-esc to display strings over here (non editable) -->
+                    <h1>Hello <t t-esc="user.name"></t></h1>
+
+                    <!-- t-field to display strings over here (editable) -->
+                    <!-- t-field update value in db also -->
+                    <!-- t-field only works with record set -->
+                    <!-- t-field not working with t tag -->
+                    <h1>Hello <span t-field="user.name"></span></h1>
+                    <h1>STRING <t t-esc="test_def()"></t></h1>
+
+                    <!-- you can use previously created variables in to t-esc -->
+                    <h1>Var 1 = <t t-esc="var1"></t></h1>
+
+                    <!-- t-call to display content of other template -->
+                    <t t-call="intforce_template.email_alert" />
+                </div>
+                <!-- t-foreach to put for loop on the records -->
+                <!-- t-foreach works on recordset also -->
+                <div t-foreach="arr" t-as="a">
+                    <t t-esc="a"></t>
+                </div>
+
+                <div class="oe_structure"></div>
+            </t>
+        </template>
+        <template id="assets_openacademy" inherit_id="web.assets_backend" name="Open Academy Assets">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" type="text/css" href="/intforce/static/src/css/intforce.css"/>
+                <script src="/intforce/static/src/js/intforce.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+
+        <template id="session_snnipet" name="Session Snippet">
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="alert alert-success text-center">
+                            <h3> Sample Name </h3>
+                            <img class="img img-responsive my_img" src="/intforce/static/src/img/img_test.jpg"></img>
+                            <hr/>
+                            <div>
+                                Test Description
+                            </div>
+                            <a class="btn btn-lg btn-success" href="#"> Details </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="alert alert-success text-center">
+                            <h3> Sample Name </h3>
+                            <img class="img img-responsive my_img" src="/intforce/static/src/img/img_test.jpg"></img>
+                            <hr/>
+                            <div>
+                                Test Description
+                            </div>
+                            <a class="btn btn-lg btn-success" href="#"> Details </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="alert alert-success text-center">
+                            <h3> Sample Name </h3>
+                            <img class="img img-responsive my_img" src="/intforce/static/src/img/img_test.jpg"></img>
+                            <hr/>
+                            <div>
+                                Test Description
+                            </div>
+                            <a class="btn btn-lg btn-success" href="#"> Details </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <template id="session_snnipet_add" inherit_id="website.snippets" name="Session Snippet Add">
+            <xpath expr="//div[@id='snippet_structure']/div[@class='o_panel_body']" position="inside">
+                <t t-snippet="intforce.session_snnipet" t-thumbnail="/website/static/src/img/snippets_thumbs/s_alert.png"/>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

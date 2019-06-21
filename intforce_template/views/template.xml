@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <!-- You can use such template in multiple template via t-call -->
+        <!-- You can use t-call recursively in same template also (for example see product category in commerces)) -->
+        <!-- You can use all the variable from parent template when you use t-call -->
+        <template id="email_alert" name="Dynamic Page">
+            <div class="alert alert-danger" role="alert">
+                <span class="sr-only">Error:</span>
+              Enter a valid email address <t t-esc="var1" />
+            </div>
+        </template>
+    </data>
+</odoo>
