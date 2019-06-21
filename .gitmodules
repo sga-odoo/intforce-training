@@ -1,0 +1,4 @@
+[submodule "dbo-odoo/odoo-js-demo"]
+	path = dbo-odoo/odoo-js-demo
+	url = git@github.com:dbo-odoo/odoo-js-demo.git
+	branch = master
